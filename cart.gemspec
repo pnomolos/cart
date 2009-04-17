@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cart}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["botanicus"]
@@ -17,19 +17,19 @@ Gem::Specification.new do |s|
   # s.rubyforge_project = nil
   s.summary = %q{Cart is framework agnostic solution for shopping cart.}
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 2
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mime-types>, [">= 1.15"])
-      s.add_runtime_dependency(%q<diff-lcs>, [">= 1.1.2"])
-    else
-      s.add_dependency(%q<mime-types>, [">= 1.15"])
-      s.add_dependency(%q<diff-lcs>, [">= 1.1.2"])
-    end
-  else
-    s.add_dependency(%q<mime-types>, [">= 1.15"])
-    s.add_dependency(%q<diff-lcs>, [">= 1.1.2"])
-  end
+  # if s.respond_to? :specification_version then
+  #   current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
+  #   s.specification_version = 2
+  # 
+  #   if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+  #     s.add_runtime_dependency(%q<mime-types>, [">= 1.15"])
+  #     s.add_runtime_dependency(%q<diff-lcs>, [">= 1.1.2"])
+  #   else
+  #     s.add_dependency(%q<mime-types>, [">= 1.15"])
+  #     s.add_dependency(%q<diff-lcs>, [">= 1.1.2"])
+  #   end
+  # else
+  #   s.add_dependency(%q<mime-types>, [">= 1.15"])
+  #   s.add_dependency(%q<diff-lcs>, [">= 1.1.2"])
+  # end
 end
