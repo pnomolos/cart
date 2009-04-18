@@ -42,7 +42,7 @@ class Cart
   end
 
   def add(product, count = 1)
-    raise ArgumentError unless product.kind_of(@config.product_model)
+    raise ArgumentError unless product.kind_of?(@config.product_model)
     if item = find(product)
       item.count += count
     else
