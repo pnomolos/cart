@@ -9,16 +9,17 @@ end
 class Cart
   def self.load(data)
     cart = Cart.new
+    @config = Cart
     unless data.nil?
-      data = YAML::load(data)
-      cart.items = data.map { |id| @config.product_model.get(id) }
+      cart.items = YAML::load(data)
     end
     return cart
   end
 
   # returns array of products
   def items
-    @items.map { |item| @config.product_model.get(item) }
+    @items
+    #.map { |item| @config.product_model.get(item) }
   end
 
   def inspect
@@ -28,8 +29,13 @@ class Cart
   # takes array of products
   def items=(products)
     raise ArgumentError if not products.respond_to?(:each) # not just arrays
-    raise ArgumentError if not products.all? { |product| product.kind_of?(@config.product_model) }
-    @items = products.to_a
+    raise ArgumentError if not products.all? { |product| @config.product_model.get(product.id) }
+    @items = products
+    # @items = products.map do |product|
+    #   struct = CartItem.new
+    #   struct.id = product.id
+    #   struct.count = count
+    # end
   end
 
   def initialize
@@ -38,7 +44,7 @@ class Cart
   end
 
   def save
-    @items.map { |product| product.id }.to_yaml
+    YAML::dump(@items)
   end
 
   def add(product, count = 1)
@@ -47,7 +53,7 @@ class Cart
       item.count += count
     else
       struct = CartItem.new
-      struct.id = id
+      struct.id = product.id
       struct.count = count
       @items.push(struct)
     end
@@ -69,6 +75,13 @@ class Cart
 
   def empty?
     @items.empty?
+  end
+
+  def quantity(product)
+    if item = find(product)
+      return item.count
+    end
+    return 0
   end
 
   protected
