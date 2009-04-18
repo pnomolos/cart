@@ -47,7 +47,7 @@ class Cart
     YAML::dump(@items)
   end
 
-  def add(product, count = 1)
+  def add(product, count = 1, sort = nil)
     raise ArgumentError unless product.kind_of?(@config.product_model)
     if item = find(product)
       item.count += count
@@ -57,13 +57,14 @@ class Cart
       struct.count = count
       @items.push(struct)
     end
+    self.sort(sort)
   end
 
   # remove all products with id 1
   # cart.remove(1)
   # remove 2 products with id 1
   # cart.remove(1, 2)
-  def remove(product, count = nil)
+  def remove(product, count = nil, sort = nil)
     if item = find(product)
       if count.nil? || item.count <= count
         @items.delete(item)
@@ -71,6 +72,7 @@ class Cart
         item.count = (item.count - count)
       end
     end
+    self.sort(sort)
   end
 
   def empty?
@@ -87,5 +89,11 @@ class Cart
   protected
   def find(product)
     @items.find { |item| item.id.eql?(product.id) }
+  end
+  
+  def sort(field)
+    if !field.nil? && !@config.product_model.instance_methods.index(field.to_s).nil?
+      @items = @items.sort { |a,b| @config.product_model.get(a.id).send(field) <=> @config.product_model.get(b.id).send(field) }
+    end
   end
 end
