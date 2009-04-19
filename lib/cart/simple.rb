@@ -74,9 +74,19 @@ class Cart
     end
     self.sort(sort)
   end
+  
+  def update(product, count = nil)
+    if (item = find(product)) && !count.nil?
+      item.count = count
+    end
+  end
 
   def empty?
     @items.empty?
+  end
+  
+  def empty!
+    @items = Array.new
   end
 
   def quantity(product)
