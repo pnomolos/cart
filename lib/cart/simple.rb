@@ -12,6 +12,7 @@ class Cart
     @config = Cart
     unless data.nil?
       cart.items = YAML::load(data)
+      cart.items.map! { |item| item.count = item.count.to_i; item }
     end
     return cart
   end
@@ -49,6 +50,7 @@ class Cart
 
   def add(product, count = 1, sort = nil)
     raise ArgumentError unless product.kind_of?(@config.product_model)
+    count = count.to_i
     if item = find(product)
       item.count += count
     else
