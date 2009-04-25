@@ -79,7 +79,12 @@ class Cart
   
   def update(product, count = nil)
     if (item = find(product)) && !count.nil?
-      item.count = count
+      # Make sure we've got Integers.  Lots of integers!
+      begin
+        item.count = count.to_i
+      rescue
+        return false
+      end
     end
   end
 
@@ -93,7 +98,11 @@ class Cart
 
   def quantity(product)
     if item = find(product)
-      return item.count
+      # This should always be an Integer
+      begin
+        return item.count.to_i
+      rescue
+      end
     end
     return 0
   end
